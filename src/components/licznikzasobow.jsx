@@ -4,6 +4,10 @@ import React, {useState} from 'react';
 import {Calyzasob} from "./calosc";
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import IconButton from "@material-ui/core/IconButton";
+import Icon from "@material-ui/core/Icon";
+import AddIcon from '@material-ui/icons/Add';
+
 
 const useStyles = makeStyles({
     root: {
@@ -25,28 +29,42 @@ const useStyles = makeStyles({
         marginRight: 10,
         marginLeft: 10,
     },
+
 })
 
 export function ResourceCounter(props) {
-    const [count, setCount] = useState(0);
+
 
 
     const classes = useStyles(props);
 
 
     return (
+
         <div className={classes.root}>
             <p>
-                <h1>  {props.text2}</h1>
+                <h1>  {props.text}</h1>
                 <ButtonGroup>
-                    <Button variant="contained" className={classes.button} onClick={() => setCount(count + 1)}>+</Button>
-                    <Button variant="contained" className={classes.button}> {count} </Button>
+
+                    <IconButton variant="contained" aria-label="Add" className={classes.button} onClick={ () => props.dispatch( {id: props.id ,type: 'increment'})}><AddIcon /></IconButton>
+                    <Button variant="contained" className={classes.button}> {props.count} </Button>
                     <Button variant="contained" className={classes.button} onClick={() => {
-                        if (count > 0) {
-                            setCount(count - 1)
+                        if (props.count > 0) {
+                         props.dispatch( {id: props.id ,type: 'decrement'})
+                        }
+                        else {
+                            if(props.text=='M€'&& props.count>-5){
+                                  props.dispatch( {id: props.id ,type: 'decrement'})
+                            }
                         }
                     }}>-
                     </Button>
+                    {props.czytoilosc&&<Button variant="contained" className={classes.button} onClick={() => {
+                        if (props.count > 7) {
+                           props.dispatch( {id: props.id ,type: 'maxdecrement'})
+                        }
+
+                    }}>-8</Button>}
                      </ButtonGroup>
             </p>
 
