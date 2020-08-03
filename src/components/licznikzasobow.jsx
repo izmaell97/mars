@@ -5,9 +5,9 @@ import {Calyzasob} from "./calosc";
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import IconButton from "@material-ui/core/IconButton";
-import Icon from "@material-ui/core/Icon";
+import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
-
+import {SimpleModal} from './modalustawwartosc'
 
 const useStyles = makeStyles({
     root: {
@@ -29,14 +29,25 @@ const useStyles = makeStyles({
         marginRight: 10,
         marginLeft: 10,
     },
+    paper: {
+    position: 'absolute',
+    width: 4,
+    backgroundColor: "#b4976f",
+    border: '2px solid #000',
+
+  },
 
 })
+
+
 
 export function ResourceCounter(props) {
 
 
 
     const classes = useStyles(props);
+
+
 
 
     return (
@@ -46,9 +57,10 @@ export function ResourceCounter(props) {
                 <h1>  {props.text}</h1>
                 <ButtonGroup>
 
-                    <IconButton variant="contained" aria-label="Add" className={classes.button} onClick={ () => props.dispatch( {id: props.id ,type: 'increment'})}><AddIcon /></IconButton>
-                    <Button variant="contained" className={classes.button}> {props.count} </Button>
-                    <Button variant="contained" className={classes.button} onClick={() => {
+                    <IconButton variant="contained" aria-label="Add" className={classes.button} onClick={ () => props.dispatch( {id: props.id ,type: 'increment'})}><AddIcon/></IconButton>
+
+                <SimpleModal text={props.count} dispatch={props.dispatch} id={props.id}/>
+                    <IconButton variant="contained" aria-label="Remove" className={classes.button} onClick={() => {
                         if (props.count > 0) {
                          props.dispatch( {id: props.id ,type: 'decrement'})
                         }
@@ -57,14 +69,14 @@ export function ResourceCounter(props) {
                                   props.dispatch( {id: props.id ,type: 'decrement'})
                             }
                         }
-                    }}>-
-                    </Button>
-                    {props.czytoilosc&&<Button variant="contained" className={classes.button} onClick={() => {
+                    }}><RemoveIcon/>
+                    </IconButton>
+                    {props.czytoilosc&&<IconButton variant="contained" className={classes.button} onClick={() => {
                         if (props.count > 7) {
                            props.dispatch( {id: props.id ,type: 'maxdecrement'})
                         }
 
-                    }}>-8</Button>}
+                    }}>-8</IconButton>}
                      </ButtonGroup>
             </p>
 
