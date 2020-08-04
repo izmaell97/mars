@@ -2,18 +2,20 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from "@material-ui/core/Button";
-import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
-import BuildIcon from '@material-ui/icons/Build';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import EcoIcon from '@material-ui/icons/Eco';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 import LanguageIcon from '@material-ui/icons/Language';
+import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
+import BuildIcon from '@material-ui/icons/Build';
 import {ModalWykresu} from "./modalwykresu";
 
 function getModalStyle() {

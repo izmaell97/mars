@@ -56,7 +56,7 @@ export  function SimpleModal(prop) {
       <h1 id="simple-modal-title">
            <TextField type="numeric" id="standard-basic" label="Standard" defaultValue={prop.text}  />
 
-          <Button onClick={ ()=> prop.dispatch( {id: prop.id, val: document.getElementById("standard-basic").value ,type: 'set'})}>wykonaj!</Button>
+          <Button onClick={ ()=> prop.dispatch( {id: prop.id, val: parseInt(document.getElementById("standard-basic").value, 10) ,type: 'set'})}>wykonaj!</Button>
       </h1>
       <p id="simple-modal-description">
 

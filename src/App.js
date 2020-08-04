@@ -5,6 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {Mnodalrundy} from './components/modalPoprzedniaRunda'
+import {ModalKart} from "./components/modalkart";
+
 function init() {
 
     // return {...initialState} ;
@@ -192,7 +194,9 @@ const colour = {
                  <Grid item xl={12}>
                     <Mnodalrundy text="Historia" kolory={colour} stan={state.historia} dispatch={dispatch}/>
                 </Grid>
-
+<Grid item xl={12}>
+                    <ModalKart text="karta" kolory={colour} stan={state} dispatch={dispatch}/>
+                </Grid>
             </Grid>
 
         </div>
