@@ -2,10 +2,7 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from "@material-ui/core/Button";
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
+
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Slider from '@material-ui/core/Slider';
 import BuildIcon from '@material-ui/icons/Build';
@@ -56,46 +53,46 @@ export function ModalKart(prop) {
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
 
-    const [statePrzycisk, setStatePrzycisk] = React.useState({
-        Stal: false,
-        Tytan: false,
+    const [stateSwitch, setStateSwitch] = React.useState({
+        isSteel: false,
+        isTitan: false,
     });
-    const [czymozliwe, setStateczymozliwe] = React.useState(false) //
-    const [iloscstali, setValueStali] = React.useState(0); //
-    const [ilosctytanu, setValueTytanu] = React.useState(0);//
-    const [zamowienie, setZamowienie] = React.useState(0); //
+    const [isPossible, setIsPossible] = React.useState(false) //
+    const [steelNumber, setSteelNumber] = React.useState(0); //
+    const [titanNumber, setTitanNumber] = React.useState(0);//
+    const [order, setOrder] = React.useState(0); //
     const handleOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
-        setStateczymozliwe(false)
-        setZamowienie(0)
-        setValueTytanu(0)
-        setValueStali(0)
+        setIsPossible(false)
+        setOrder(0)
+        setTitanNumber(0)
+        setTitanNumber(0)
 
 
     };
     const handleExecute = () => {
-        let suma = zamowienie
-        suma = suma - ((2 * iloscstali) + (3 * ilosctytanu))
-        if (suma > prop.stan.megakredyty) {
-            setStateczymozliwe(true)
+        let amount = order
+        amount = amount - ((2 * steelNumber) + (3 * titanNumber))
+        if (amount > prop.stan.megaCredits) {
+            setIsPossible(true)
         } else {
-            if (suma > 0) {
-                suma = prop.stan.megakredyty - suma
-                prop.dispatch({id: "megakredyty", val: suma, type: 'set'})
-                let stalnowa = prop.stan.stali - iloscstali
-                let tytanowa = prop.stan.tytani - ilosctytanu
-                prop.dispatch({id: "stali", val: stalnowa, type: 'set'})
-                prop.dispatch({id: "tytani", val: tytanowa, type: 'set'})
+            if (amount > 0) {
+                amount = prop.stan.megaCredits - amount
+                prop.dispatch({id: "megaCredits", val: amount, type: 'set'})
+                let newSteel = prop.stan.steelNumber - steelNumber
+                let newTitan = prop.stan.titanNumber - titanNumber
+                prop.dispatch({id: "titanNumber", val: newTitan, type: 'set'})
+                prop.dispatch({id: "steelNumber", val: newSteel, type: 'set'})
                 handleClose()
             } else {
-                let stalnowa = prop.stan.stali - iloscstali
-                let tytanowa = prop.stan.tytani - ilosctytanu
-                prop.dispatch({id: "stali", val: stalnowa, type: 'set'})
-                prop.dispatch({id: "tytani", val: tytanowa, type: 'set'})
+                 let newSteel = prop.stan.steelNumber - steelNumber
+                let newTitan = prop.stan.titanNumber - titanNumber
+                prop.dispatch({id: "titanNumber", val: newTitan, type: 'set'})
+                prop.dispatch({id: "steelNumber", val: newSteel, type: 'set'})
                 handleClose()
             }
 
@@ -103,36 +100,36 @@ export function ModalKart(prop) {
 
     }
 
-    const handleChangePrzelacznik = (event) => {
-        setStatePrzycisk({...statePrzycisk, [event.target.name]: event.target.checked});
+    const handleChangeSwitch = (event) => {
+        setStateSwitch({...stateSwitch, [event.target.name]: event.target.checked});
 
     };
 
-    const handleChangeTytan = (event, newValue) => {
-        setValueTytanu(newValue);
+    const handleChangeTitan = (event, newValue) => {
+        setTitanNumber(newValue);
     };
-    const handleChangeStal = (event, newValue) => {
-        setValueStali(newValue);
+    const handleChangeSteel = (event, newValue) => {
+        setSteelNumber(newValue);
     };
-    const handleChangezamowienie = (event) => {
-        setZamowienie(parseInt(event.target.value))
+    const handleChangeOrder = (event) => {
+        setOrder(parseInt(event.target.value))
 
     };
-    let wartoscMaxStali = 0
-    if (zamowienie - (ilosctytanu * 3) > prop.stan.stali) {
-        wartoscMaxStali = prop.stan.stali
+    let maxSteelValue = 0
+    if (order - (titanNumber * 3) > prop.stan.steelNumber) {
+        maxSteelValue = prop.stan.steelNumber
     } else {
-        wartoscMaxStali = zamowienie - (ilosctytanu * 3)
+        maxSteelValue = (order - (titanNumber * 3)) / 2
     }
-    if (wartoscMaxStali < 0) wartoscMaxStali = 0
-    let wartoscMaxTytanu = 0
-    if (zamowienie - (iloscstali * 2) > prop.stan.tytani) {
-        wartoscMaxTytanu = prop.stan.tytani
+    if (maxSteelValue < 0) maxSteelValue = 0
+    let maxTitanValue = 0
+    if (order - (steelNumber * 2) > prop.stan.titanNumber) {
+        maxTitanValue = prop.stan.titanNumber
     } else {
-        wartoscMaxTytanu = zamowienie - (iloscstali * 2)
+        maxTitanValue = (order - (steelNumber * 2)) / 3
     }
 
-    if (wartoscMaxTytanu < 0) wartoscMaxTytanu = 0
+    if (maxTitanValue < 0) maxTitanValue = 0
     return (
         <div>
             <Button variant="contained" className={classes.button} onClick={handleOpen}>
@@ -151,22 +148,22 @@ export function ModalKart(prop) {
 
                             <FormGroup column>
                                 <FormControlLabel
-                                    control={<Checkbox checked={statePrzycisk.Stal} onChange={handleChangePrzelacznik}
-                                                       name="Stal"/>}
+                                    control={<Checkbox checked={stateSwitch.isSteel} onChange={handleChangeSwitch}
+                                                       />}
                                     label="budynek"
                                 />
                                 <FormControlLabel
-                                    control={<Checkbox checked={statePrzycisk.Tytan} onChange={handleChangePrzelacznik}
-                                                       name="Tytan"/>}
+                                    control={<Checkbox checked={stateSwitch.isTitan} onChange={handleChangeSwitch}
+                                                      />}
                                     label="eksploracja kosmosu"
                                 />
                             </FormGroup>
                         </Grid>
                         <Grid item xs>
 
-                            <TextField type="numeric" id="zamowienie" label=" koszt:" defaultValue={zamowienie}
-                                       onChange={handleChangezamowienie}
-                                       error={czymozliwe}/>
+                            <TextField type="numeric"  label=" koszt:" defaultValue={order}
+                                       onChange={handleChangeOrder}
+                                       error={isPossible}/>
                         </Grid>
                     </Grid>
                     <Grid container spacing={2}>
@@ -175,14 +172,14 @@ export function ModalKart(prop) {
                             <BuildIcon/>
                         </Grid>
                         <Grid item xs>
-                            <Slider disabled={statePrzycisk.Stal == false}
-                                    value={iloscstali}
-                                    onChange={handleChangeStal}
+                            <Slider disabled={stateSwitch.isSteel === false}
+                                    value={steelNumber}
+                                    onChange={handleChangeSteel}
                                     valueLabelDisplay="auto"
                                     step={1}
                                     marks
                                     min={0}
-                                    max={wartoscMaxStali}
+                                    max={maxSteelValue}
 
                             />
                         </Grid>
@@ -190,14 +187,14 @@ export function ModalKart(prop) {
                             <StarBorderIcon/>
                         </Grid>
                         <Grid item xs>
-                            <Slider disabled={statePrzycisk.Tytan == false}
-                                    value={ilosctytanu}
-                                    onChange={handleChangeTytan}
+                            <Slider disabled={stateSwitch.isTitan === false}
+                                    value={titanNumber}
+                                    onChange={handleChangeTitan}
                                     valueLabelDisplay="auto"
                                     step={1}
                                     marks
                                     min={0}
-                                    max={wartoscMaxTytanu}
+                                    max={maxTitanValue}
                             />
                         </Grid>
                         <Button fullWidth onClick={handleExecute}>wykonaj</Button>

@@ -1,3 +1,4 @@
+//zrobione
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -16,7 +17,7 @@ import FlashOnIcon from '@material-ui/icons/FlashOn';
 import LanguageIcon from '@material-ui/icons/Language';
 import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
 import BuildIcon from '@material-ui/icons/Build';
-import {ModalWykresu} from "./modalwykresu";
+import {ModalChart} from "./modalwykresu";
 
 function getModalStyle() {
     const top = 50;
@@ -48,36 +49,36 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 10,
         marginLeft: 10,
     },
-    biale:{
-         backgroundColor: prop => prop.kolory.ptlo,
+    whiteStyle:{
+         backgroundColor: prop => prop.dye.whiteBackground,
         color: 'black'
 
 
     },
-    stalowy:{
-         backgroundColor: prop => prop.kolory.stlo,
-        color: prop => prop.kolory.skol,
+    steelStyle:{
+         backgroundColor: prop => prop.dye.steelBackground,
+        color: prop => prop.dye.steelColour,
     },
-    tytanowy:{
-        backgroundColor: prop => prop.kolory.ttlo,
-        color: prop => prop.kolory.tkol,
+    titanStyle:{
+        backgroundColor: prop => prop.dye.titanBackground,
+        color: prop => prop.dye.titanColour,
     },
-    roslinny:{
-       backgroundColor: prop => prop.kolory.rtlo,
-        color: prop => prop.kolory.rkol,
+    bioStyle:{
+       backgroundColor: prop => prop.dye.bioBackground,
+        color: prop => prop.dye.bioColour,
     },
-    energiczny:{
-      backgroundColor: prop => prop.kolory.etlo,
-        color: prop => prop.kolory.ekol,
+    energyStyle:{
+      backgroundColor: prop => prop.dye.energyBackground,
+        color: prop => prop.dye.energyColour,
     },
-    cieply:{
-      backgroundColor: prop => prop.kolory.ctlo,
-        color: prop => prop.kolory.ckol,
+    hotStyle:{
+      backgroundColor: prop => prop.dye.hotBackground,
+        color: prop => prop.dye.hotColour,
     },
 }));
 
 
-export function Mnodalrundy(prop) {
+export function ModalRound(prop) {
     const classes = useStyles(prop);
     // getModalStyle is not a pure function, we roll the style only on the first render
     const [modalStyle] = React.useState(getModalStyle);
@@ -94,19 +95,19 @@ export function Mnodalrundy(prop) {
 
     let body = prop.stan.map(element => {
             return <TableRow>
-                 <TableCell align="center" className={classes.biale}>{element.meuro}</TableCell>
-                <TableCell align="center" className={classes.biale}>{element.wt}</TableCell>
+                 <TableCell align="center" className={classes.whiteStyle}>{element.mEuro}</TableCell>
+                <TableCell align="center" className={classes.whiteStyle}>{element.wt}</TableCell>
 
 
-                <TableCell align="center"className={classes.stalowy}>{element.stal}</TableCell>
-                <TableCell align="center" className={classes.tytanowy}>{element.tytan}</TableCell>
+                <TableCell align="center" className={classes.steelStyle}>{element.steel}</TableCell>
+                <TableCell align="center" className={classes.titanStyle}>{element.titan}</TableCell>
 
-                <TableCell align="center" className={classes.roslinny}>{element.roslinnosc}</TableCell>
-                <TableCell align="center" className={classes.energiczny}>{element.energia}</TableCell>
-                <TableCell align="center" className={classes.cieply}>{element.cieplo}</TableCell>
+                <TableCell align="center" className={classes.bioStyle}>{element.bio}</TableCell>
+                <TableCell align="center" className={classes.energyStyle}>{element.energy}</TableCell>
+                <TableCell align="center" className={classes.hotStyle}>{element.hot}</TableCell>
              <TableCell align="center" className={classes.button}><Button onClick={() =>{
 
-                 prop.dispatch({type: 'return', runda: element.numerrundy})
+                 prop.dispatch({type: 'return', turn: (element.roundNumber-1)})
              }
              } > WRÓĆ</Button></TableCell>
 
@@ -135,14 +136,14 @@ export function Mnodalrundy(prop) {
         <TableHead>
           <TableRow>
 
-            < TableCell className={classes.biale} align="center"><EuroSymbolIcon/></TableCell>
-              <TableCell className={classes.biale} align="center"><LanguageIcon/></TableCell>
-               <TableCell className={classes.stalowy} align="center"><BuildIcon/></TableCell>
-            <TableCell className={classes.tytanowy} align="center"><StarBorderIcon/></TableCell>
+            < TableCell className={classes.whiteStyle} align="center"><EuroSymbolIcon/></TableCell>
+              <TableCell className={classes.whiteStyle} align="center"><LanguageIcon/></TableCell>
+               <TableCell className={classes.steelStyle} align="center"><BuildIcon/></TableCell>
+            <TableCell className={classes.titanStyle} align="center"><StarBorderIcon/></TableCell>
 
-            <TableCell align="center" className={classes.roslinny}><EcoIcon/></TableCell>
-            <TableCell align="center" className={classes.energiczny}><FlashOnIcon/></TableCell>
-               <TableCell align="center" className={classes.cieply}><FlashOnIcon/><FlashOnIcon/><FlashOnIcon/></TableCell>
+            <TableCell align="center" className={classes.bioStyle}><EcoIcon/></TableCell>
+            <TableCell align="center" className={classes.energyStyle}><FlashOnIcon/></TableCell>
+               <TableCell align="center" className={classes.hotStyle}><FlashOnIcon/><FlashOnIcon/><FlashOnIcon/></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -150,7 +151,7 @@ export function Mnodalrundy(prop) {
         </TableBody>
       </Table>
     </TableContainer>
-<ModalWykresu text="pokaż wykres" stan={prop.stan} kolory={prop.kolory}/>
+<ModalChart text="pokaż wykres" stan={prop.stan} dye={prop.dye}/>
                 </div>
             </Modal>
         </div>

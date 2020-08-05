@@ -1,9 +1,10 @@
+//zrobione
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from "@material-ui/core/Button";
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
 } from 'recharts';
 
 function getModalStyle() {
@@ -22,10 +23,9 @@ const useStyles = makeStyles((theme) => ({
         position: 'center',
         width: '50%',
         height: '60%',
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: "#cec7b9",
         border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
+
         fontSize: 20,
         marginRight: 10,
 
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export function ModalWykresu(prop) {
+export function ModalChart(prop) {
     const classes = useStyles(prop);
     // getModalStyle is not a pure function, we roll the style only on the first render
     const [modalStyle] = React.useState(getModalStyle);
@@ -57,8 +57,6 @@ export function ModalWykresu(prop) {
     };
 
 
-
-
     return (
         <div>
             <Button variant="contained" className={classes.button} onClick={handleOpen}>
@@ -69,31 +67,31 @@ export function ModalWykresu(prop) {
                 onClose={handleClose}
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
-                    style={{display:'flex',alignItems:'center',justifyContent:'center'}}
+                style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
 
             >
                 <div className={classes.paper}>
-<LineChart
- width={700}
-        height={600}
-        data={prop.stan}
-        margin={{
-          top: 5, right: 30, left: 20, bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="numerrundy" />
-        <YAxis />
-        <Tooltip />
+                    <LineChart
+                        width={700}
+                        height={600}
+                        data={prop.stan}
+                        margin={{
+                            top: 5, right: 30, left: 20, bottom: 5,
+                        }}
+                    >
+                        <CartesianGrid strokeDasharray="3 3"/>
+                        <XAxis dataKey="roundNumber"/>
+                        <YAxis/>
+                        <Tooltip />
 
-        <Line type="monotone" dataKey="meuro" stroke={prop.kolory.pkol}  />
-        <Line type="monotone" dataKey="wt" stroke={prop.kolory.pkol}  />
-        <Line type="monotone" dataKey="stal" stroke={prop.kolory.stlo}  />
-        <Line type="monotone" dataKey="tytan" stroke={prop.kolory.ttlo}  />
-        <Line type="monotone" dataKey="rosllinosc" stroke={prop.kolory.rtlo}  />
-        <Line type="monotone" dataKey="cieplo" stroke={prop.kolory.ctlo}  />
-        <Line type="monotone" dataKey="energia" stroke={prop.kolory.etlo}  />
-      </LineChart>
+                        <Line type="monotone" dataKey="mEuro" stroke={prop.dye.whiteColour} name="Megakredyty" />
+                        <Line type="monotone" dataKey="wt" stroke={prop.dye.whiteColour} name="Współczynnik terraformacji" />
+                        <Line type="monotone" dataKey="steel" stroke={prop.dye.steelColour} name=" Stal"/>
+                        <Line type="monotone" dataKey="titan" stroke={prop.dye.titanBackground} name="Tytan"/>
+                        <Line type="monotone" dataKey="bio" stroke={prop.dye.bioColour} name="Roślinność"/>
+                        <Line type="monotone" dataKey="hot" stroke={prop.dye.hotBackground} name="Ciepło"/>
+                        <Line type="monotone" dataKey="energy" stroke={prop.dye.energyBackground} name="Energia"/>
+                    </LineChart>
 
                 </div>
             </Modal>

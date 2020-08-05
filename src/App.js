@@ -4,7 +4,7 @@ import {ResourceCounter} from "./components/licznikzasobow";
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import {Mnodalrundy} from './components/modalPoprzedniaRunda'
+import {ModalRound} from './components/modalPoprzedniaRunda'
 import {ModalKart} from "./components/modalkart";
 
 function init() {
@@ -18,10 +18,11 @@ function reducer(state, action) {
 
     switch (action.type) {
         case 'return':
-            let tymczasowakopia=state.historia;
-            newState=newState.historia[action.runda];
-            newState.historia=tymczasowakopia;
-             tymczasowakopia=[]
+            let tempCopy=[]
+          tempCopy  = state.hist;
+            newState = newState.hist[action.turn];
+            newState.hist = tempCopy;
+            tempCopy = []
             return newState;
         case 'increment':
             newState[action.id] += 1;
@@ -29,31 +30,30 @@ function reducer(state, action) {
         case 'decrement':
             newState[action.id] -= 1;
             return newState;
-        case 'maxdecrement':
+        case 'maxDecrement':
             newState[action.id] -= 8;
             return newState;
         case 'reset':
             return init();
-        case 'nextround':
+        case 'nextRound':
 
-            let kopia={}
-                Object.assign(kopia, {...state})
-kopia.historia=[]
+            let copy = {}
+            Object.assign(copy, {...state})
+            copy.hist = []
 
-            newState.historia.push(kopia)
- newState.numerrundy+=1;
+            newState.hist.push(copy)
+            newState.roundNumber += 1;
 
-            newState.stali=state.stali+state.stal
-            newState.tytani=state.tytani+state.tytan
-            if(state.meuro+state.wt+state.megakredyty>0){
-                newState.megakredyty=state.meuro+state.wt+state.megakredyty
+            newState.steelNumber = state.steelNumber + state.steel
+            newState.titanNumber = state.titanNumber + state.titan
+            if (state.mEuro + state.wt + state.megaCredits > 0) {
+                newState.megaCredits = state.mEuro + state.wt + state.megaCredits
+            } else {
+                newState.megaCredits = 0
             }
-            else{
-                newState.megakredyty=0
-            }
-            newState.roslinnosci=state.roslinnosc+state.roslinnosci
-             newState.cieploi=state.cieplo+state.cieploi+state.energiai
-            newState.energiai=state.energia
+            newState.bioNumber = state.bio + state.bioNumber
+            newState.hotNumber = state.hot + state.hotNumber + state.energyNumber
+            newState.energyNumber = state.energy
 
             return newState;
         case 'set':
@@ -66,7 +66,7 @@ kopia.historia=[]
 }
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
         background: ' radial-gradient(circle, rgba(176,176,176,1) 7%, rgba(180,173,167,1) 19%, rgba(166,162,162,1) 46%, rgba(162,162,162,1) 78%, rgba(215,213,210,1) 99%)',
     },
@@ -77,47 +77,47 @@ const useStyles = makeStyles((theme) => ({
 
 
     },
-    jeden: {
+    one: {
         width: '50%',
     }
 
 
 }));
 const initialState = {
-    stal: 0,
-    stali: 0,
-    tytan: 0,
-    tytani: 0,
-    megakredyty: 0,
-    meuro: 0,
+    steel: 0,
+    steelNumber: 0,
+    titan: 0,
+    titanNumber: 0,
+    megaCredits: 0,
+    mEuro: 0,
     wt: 20,
-    roslinnosc: 0,
-    roslinnosci: 0,
-    energia: 0,
-    energiai: 0,
-    cieplo: 0,
-    cieploi: 0,
-    numerrundy: 1,
-historia: [],
+    bio: 0,
+    bioNumber: 0,
+    energy: 0,
+    energyNumber: 0,
+    hot: 0,
+    hotNumber: 0,
+    roundNumber: 1,
+    hist: [],
 };
 
 function App() {
     const classes = useStyles();
     const [state, dispatch] = useReducer(reducer, initialState, init)
-const colour = {
-    ptlo: '#ffffff',
-    pkol: '#FED300',
-    stlo: '#89633D',
-    skol: '#463118',
-    ttlo: '#3B3E3D',
-    tkol: '#DFDA6C',
-    rtlo: '#57B233',
-    rkol: '#277043',
-    ctlo: '#EF482C',
-    ckol: '#F4E52F',
-    etlo: '#7D2D83',
-    ekol: '#F8E6F6',
-};
+    const colour = {
+        whiteBackground: '#ffffff',
+        whiteColour: '#FED300',
+        steelBackground: '#89633D',
+        steelColour: '#463118',
+        titanBackground: '#3B3E3D',
+        titanColour: '#DFDA6C',
+        bioBackground: '#57B233',
+        bioColour: '#277043',
+        hotBackground: '#EF482C',
+        hotColour: '#F4E52F',
+        energyBackground: '#7D2D83',
+        energyColour: '#F8E6F6',
+    };
     return (
         <div className={classes.root}>
 
@@ -129,73 +129,80 @@ const colour = {
                       alignItems="baseline"
                       justify="center"
                 >
-                    <span className={classes.jeden}> <ResourceCounter text="M€" count={state.meuro} id="meuro"
-                                                                      dispatch={dispatch} background={colour.ptlo}
-                                                                      color={colour.pkol}/>  </span>
-                    <span className={classes.jeden}>  <ResourceCounter text="WT" count={state.wt} id="wt"
-                                                                       dispatch={dispatch} background={colour.ptlo}
-                                                                       color={colour.pkol}/> </span>
+                    <span className={classes.one}> <ResourceCounter text="M€" count={state.mEuro} id="mEuro"
+                                                                    dispatch={dispatch}
+                                                                    background={colour.whiteBackground}
+                                                                    color={colour.whiteColour}/>  </span>
+                    <span className={classes.one}>  <ResourceCounter text="WT" count={state.wt} id="wt"
+                                                                     dispatch={dispatch}
+                                                                     background={colour.whiteBackground}
+                                                                     color={colour.whiteColour}/> </span>
                 </Grid>
                 <Grid item xl={4}>
-                    <ResourceCounter text="STAL" count={state.stal} id="stal" dispatch={dispatch} background={colour.stlo}
-                                     color={colour.skol}/>
+                    <ResourceCounter text="STAL" count={state.steel} id="steel" dispatch={dispatch}
+                                     background={colour.steelBackground}
+                                     color={colour.steelColour}/>
                 </Grid>
                 <Grid item xl={4}>
-                    <ResourceCounter text="TYTAN " count={state.tytan} id="tytan" dispatch={dispatch} background={colour.ttlo}
-                                     color={colour.tkol}/>
+                    <ResourceCounter text="TYTAN " count={state.titan} id="titan" dispatch={dispatch}
+                                     background={colour.titanBackground}
+                                     color={colour.titanColour}/>
                 </Grid>
                 <Grid item xl={4}>
-                    <ResourceCounter text="MEGAKREDYTY" count={state.megakredyty} id="megakredyty" dispatch={dispatch}
-                                     background={colour.ptlo} color={colour.pkol} />
+                    <ResourceCounter text="MEGAKREDYTY" count={state.megaCredits} id="megaCredits" dispatch={dispatch}
+                                     background={colour.whiteBackground} color={colour.whiteColour}/>
                 </Grid>
                 <Grid item xl={4}>
-                    <ResourceCounter text="STAL ILOŚĆ" count={state.stali} id="stali" dispatch={dispatch}
-                                     background={colour.stlo} color={colour.skol} />
+                    <ResourceCounter text="STAL ILOŚĆ" count={state.steelNumber} id="steelNumber" dispatch={dispatch}
+                                     background={colour.steelBackground} color={colour.steelColour}/>
                 </Grid>
                 <Grid item xl={4}>
-                    <ResourceCounter text="TYTAN ILOŚĆ" count={state.tytani} id="tytani" dispatch={dispatch}
-                                     background={colour.ttlo} color={colour.tkol} />
+                    <ResourceCounter text="TYTAN ILOŚĆ" count={state.titanNumber} id="titanNumber" dispatch={dispatch}
+                                     background={colour.titanBackground} color={colour.titanColour}/>
                 </Grid>
                 <Grid item xl={4}>
-                    <ResourceCounter text="ROŚLINNOŚĆ" count={state.roslinnosc} id="roslinnosc" dispatch={dispatch}
-                                     background={colour.rtlo} color={colour.rkol}/>
+                    <ResourceCounter text="ROŚLINNOŚĆ" count={state.bio} id="bio" dispatch={dispatch}
+                                     background={colour.bioBackground} color={colour.bioColour}/>
                 </Grid>
                 <Grid item xl={4}>
-                    <ResourceCounter text="ENERGIA " background={colour.etlo} count={state.energia} id="energia"
-                                     dispatch={dispatch} color={colour.ekol} text2="ENERGIA"/>
+                    <ResourceCounter text="ENERGIA " count={state.energy} id="energy"
+                                     dispatch={dispatch} background={colour.energyBackground}
+                                     color={colour.energyColour}/>
                 </Grid>
 
                 <Grid item xl={4}>
-                    <ResourceCounter text="CIEPŁO " count={state.cieplo} id="cieplo" dispatch={dispatch}
-                                     background={colour.ctlo} color={colour.ckol} text2="CIEPŁO"/>
+                    <ResourceCounter text="CIEPŁO " count={state.hot} id="hot" dispatch={dispatch}
+                                     background={colour.hotBackground} color={colour.hotColour}/>
                 </Grid>
 
 
                 <Grid item xl={4}>
-                    <ResourceCounter text="ROŚLINNOŚĆ ILOŚĆ" count={state.roslinnosci} id="roslinnosci"
-                                     dispatch={dispatch} background={colour.rtlo} color={colour.rkol}
-                                     czytoilosc={true}/>
+                    <ResourceCounter text="ROŚLINNOŚĆ ILOŚĆ" count={state.bioNumber} id="bioNumber"
+                                     dispatch={dispatch} background={colour.bioBackground} color={colour.bioColour}
+                                     isBig={true}/>
                 </Grid>
                 <Grid item xl={4}>
-                    <ResourceCounter text="ENERGIA ILOŚĆ" count={state.energiai} id="energiai" dispatch={dispatch}
-                                     background={colour.etlo} color={colour.ekol}/>
+                    <ResourceCounter text="ENERGIA ILOŚĆ" count={state.energyNumber} id="energyNumber"
+                                     dispatch={dispatch}
+                                     background={colour.energyBackground} color={colour.energyColour}/>
                 </Grid>
                 <Grid item xl={4}>
-                    <ResourceCounter text="CIEPŁO ILOŚĆ" count={state.cieploi} id="cieploi" dispatch={dispatch}
-                                     background={colour.ctlo} color={colour.ckol} czytoilosc={true}/>
+                    <ResourceCounter text="CIEPŁO ILOŚĆ" count={state.hotNumber} id="hotNumber" dispatch={dispatch}
+                                     background={colour.hotBackground} color={colour.hotColour} isBig={true}/>
                 </Grid>
                 <Grid item xl={12}>
-                    <Button fullWidth variant="contained" onClick={ () =>dispatch({type: 'nextround'})} className={classes.button}>Nowa Runda</Button>
+                    <Button fullWidth variant="contained" onClick={() => dispatch({type: 'nextRound'})}
+                            className={classes.button}>Nowa Runda</Button>
                 </Grid>
                 <Grid item xl={12}>
-                    <Button fullWidth variant="contained" onClick={() =>dispatch({type: 'reset'})}
+                    <Button fullWidth variant="contained" onClick={() => dispatch({type: 'reset'})}
                             className={classes.button}>Zeruj</Button>
                 </Grid>
-                 <Grid item xl={12}>
-                    <Mnodalrundy text="Historia" kolory={colour} stan={state.historia} dispatch={dispatch}/>
+                <Grid item xl={12}>
+                    <ModalRound text="Historia" dye={colour} stan={state.hist} dispatch={dispatch}/>
                 </Grid>
-<Grid item xl={12}>
-                    <ModalKart text="karta" kolory={colour} stan={state} dispatch={dispatch}/>
+                <Grid item xl={12}>
+                    <ModalKart text="karta" dye={colour} stan={state} dispatch={dispatch}/>
                 </Grid>
             </Grid>
 

@@ -1,17 +1,15 @@
-import ReactDOM from 'react-dom';
-import {makeStyles, withStyles} from '@material-ui/core/styles';
-import React, {useState} from 'react';
-import {Calyzasob} from "./calosc";
-import Button from '@material-ui/core/Button';
+import {makeStyles} from '@material-ui/core/styles';
+import React from 'react';
+
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import IconButton from "@material-ui/core/IconButton";
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
-import {SimpleModal} from './modalustawwartosc'
+import {ValueModal} from './modalustawwartosc'
 
 const useStyles = makeStyles({
     root: {
-        background:   props => `linear-gradient(54deg,   ${ props.background} 85%,grey 100%)`,
+        background: props => `linear-gradient(54deg,   ${props.background} 85%,grey 100%)`,
         color: props => props.color,
         border: 0,
         borderRadius: 3,
@@ -30,55 +28,54 @@ const useStyles = makeStyles({
         marginLeft: 10,
     },
     paper: {
-    position: 'absolute',
-    width: 4,
-    backgroundColor: "#b4976f",
-    border: '2px solid #000',
+        position: 'absolute',
+        width: 4,
+        backgroundColor: "#b4976f",
+        border: '2px solid #000',
 
-  },
+    },
 
 })
-
 
 
 export function ResourceCounter(props) {
 
 
-
     const classes = useStyles(props);
-
-
 
 
     return (
 
         <div className={classes.root}>
-            <p>
+
                 <h1>  {props.text}</h1>
                 <ButtonGroup>
 
-                    <IconButton variant="contained" aria-label="Add" className={classes.button} onClick={ () => props.dispatch( {id: props.id ,type: 'increment'})}><AddIcon/></IconButton>
+                    <IconButton variant="contained" aria-label="Add" className={classes.button}
+                                onClick={() => props.dispatch({
+                                    id: props.id,
+                                    type: 'increment'
+                                })}><AddIcon/></IconButton>
 
-                <SimpleModal text={props.count} dispatch={props.dispatch} id={props.id}/>
+                    <ValueModal text={props.count} dispatch={props.dispatch} id={props.id}/>
                     <IconButton variant="contained" aria-label="Remove" className={classes.button} onClick={() => {
                         if (props.count > 0) {
-                         props.dispatch( {id: props.id ,type: 'decrement'})
-                        }
-                        else {
-                            if(props.text=='M€'&& props.count>-5){
-                                  props.dispatch( {id: props.id ,type: 'decrement'})
+                            props.dispatch({id: props.id, type: 'decrement'})
+                        } else {
+                            if (props.text === 'M€' && props.count > -5) {
+                                props.dispatch({id: props.id, type: 'decrement'})
                             }
                         }
                     }}><RemoveIcon/>
                     </IconButton>
-                    {props.czytoilosc&&<IconButton variant="contained" className={classes.button} onClick={() => {
+                    {props.isBig && <IconButton variant="contained" className={classes.button} onClick={() => {
                         if (props.count > 7) {
-                           props.dispatch( {id: props.id ,type: 'maxdecrement'})
+                            props.dispatch({id: props.id, type: 'maxDecrement'})
                         }
 
                     }}>-8</IconButton>}
-                     </ButtonGroup>
-            </p>
+                </ButtonGroup>
+
 
 
         </div>
