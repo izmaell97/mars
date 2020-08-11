@@ -6,6 +6,13 @@ import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {ModalRound} from './components/modalPoprzedniaRunda'
 import {ModalKart} from "./components/modalkart";
+import EuroSymbolIcon from "@material-ui/icons/EuroSymbol";
+import LanguageIcon from "@material-ui/icons/Language";
+import BuildIcon from "@material-ui/icons/Build";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import EcoIcon from "@material-ui/icons/Eco";
+import FlashOnIcon from "@material-ui/icons/FlashOn";
+import TableCell from "@material-ui/core/TableCell";
 
 function init() {
 
@@ -71,7 +78,9 @@ const useStyles = makeStyles(() => ({
         background: ' radial-gradient(circle, rgba(176,176,176,1) 7%, rgba(180,173,167,1) 19%, rgba(166,162,162,1) 46%, rgba(162,162,162,1) 78%, rgba(215,213,210,1) 99%)',
     },
     button: {
-        fontSize: 30,
+        fontSize: 19,
+        marginRight: 5,
+        marginLeft: 5,
         color: "white",
         backgroundColor: "darkcyan",
 
@@ -122,73 +131,73 @@ function App() {
         <div className={classes.root}>
 
             <Grid container spacing={1} justify="stretch">
-                <Grid item xl={4}
+                <Grid item xl={4} xs={4}
                       container
                     // justify-items= "stretch"
                       direction="row"
                       alignItems="baseline"
                       justify="center"
                 >
-                    <span className={classes.one}> <ResourceCounter text="M€" count={state.mEuro} id="mEuro"
+                    <span className={classes.one}> <ResourceCounter text={<EuroSymbolIcon/>} count={state.mEuro} id="mEuro"
                                                                     dispatch={dispatch}
                                                                     background={colour.whiteBackground}
-                                                                    color={colour.whiteColour}/>  </span>
-                    <span className={classes.one}>  <ResourceCounter text="WT" count={state.wt} id="wt"
+                                                                    color={colour.whiteColour} colorBorder={colour.whiteBackground}/>  </span>
+                    <span className={classes.one}>  <ResourceCounter text={<LanguageIcon/>} count={state.wt} id="wt"
                                                                      dispatch={dispatch}
                                                                      background={colour.whiteBackground}
-                                                                     color={colour.whiteColour}/> </span>
+                                                                     color={colour.whiteColour}  colorBorder={"rgba(0, 0, 255, 0)"}/></span>
                 </Grid>
-                <Grid item xl={4}>
-                    <ResourceCounter text="STAL" count={state.steel} id="steel" dispatch={dispatch}
+                <Grid item xl={4} xs={4}>
+                    <ResourceCounter text={<BuildIcon />} count={state.steel} id="steel" dispatch={dispatch}
                                      background={colour.steelBackground}
-                                     color={colour.steelColour}/>
+                                     color={colour.steelColour} colorBorder={"rgba(0, 0, 255, 0)"}/>
                 </Grid>
-                <Grid item xl={4}>
-                    <ResourceCounter text="TYTAN " count={state.titan} id="titan" dispatch={dispatch}
+                <Grid item xl={4} xs={4}>
+                    <ResourceCounter text=<StarBorderIcon/> count={state.titan} id="titan" dispatch={dispatch}
                                      background={colour.titanBackground}
-                                     color={colour.titanColour}/>
+                                     color={colour.titanColour}  colorBorder={"rgba(0, 0, 255, 0)"}/>
                 </Grid>
-                <Grid item xl={4}>
-                    <ResourceCounter text="MEGAKREDYTY" count={state.megaCredits} id="megaCredits" dispatch={dispatch}
-                                     background={colour.whiteBackground} color={colour.whiteColour}/>
+                <Grid item xl={4} xs={4}>
+                    <ResourceCounter text={<EuroSymbolIcon/>} count={state.megaCredits} id="megaCredits" dispatch={dispatch}
+                                     background={colour.whiteBackground} color={colour.whiteColour} colorBorder="#5C2A2D"/>
                 </Grid>
-                <Grid item xl={4}>
-                    <ResourceCounter text="STAL ILOŚĆ" count={state.steelNumber} id="steelNumber" dispatch={dispatch}
-                                     background={colour.steelBackground} color={colour.steelColour}/>
+                <Grid item xl={4} xs={4}>
+                    <ResourceCounter text={<BuildIcon/>}  count={state.steelNumber} id="steelNumber" dispatch={dispatch}
+                                     background={colour.steelBackground} color={colour.steelColour} colorBorder="#5C2A2D"/>
                 </Grid>
-                <Grid item xl={4}>
-                    <ResourceCounter text="TYTAN ILOŚĆ" count={state.titanNumber} id="titanNumber" dispatch={dispatch}
-                                     background={colour.titanBackground} color={colour.titanColour}/>
+                <Grid item xl={4} xs={4}>
+                    <ResourceCounter text={<StarBorderIcon/>} count={state.titanNumber} id="titanNumber" dispatch={dispatch}
+                                     background={colour.titanBackground} color={colour.titanColour} colorBorder="#5C2A2D"/>
                 </Grid>
-                <Grid item xl={4}>
-                    <ResourceCounter text="ROŚLINNOŚĆ" count={state.bio} id="bio" dispatch={dispatch}
-                                     background={colour.bioBackground} color={colour.bioColour}/>
+                <Grid item xl={4} xs={4}>
+                    <ResourceCounter text={<EcoIcon/>} count={state.bio} id="bio" dispatch={dispatch}
+                                     background={colour.bioBackground} color={colour.bioColour}  colorBorder={"rgba(0, 0, 255, 0)"}/>
                 </Grid>
-                <Grid item xl={4}>
-                    <ResourceCounter text="ENERGIA " count={state.energy} id="energy"
+                <Grid item xl={4} xs={4}>
+                    <ResourceCounter text={<FlashOnIcon/>} count={state.energy} id="energy"
                                      dispatch={dispatch} background={colour.energyBackground}
-                                     color={colour.energyColour}/>
+                                     color={colour.energyColour}  colorBorder={"rgba(0, 0, 255, 0)"}/>
                 </Grid>
 
-                <Grid item xl={4}>
-                    <ResourceCounter text="CIEPŁO " count={state.hot} id="hot" dispatch={dispatch}
-                                     background={colour.hotBackground} color={colour.hotColour}/>
+                <Grid item xl={4} xs={4}>
+                    <ResourceCounter text={<div> <FlashOnIcon/> <FlashOnIcon/> <FlashOnIcon/> </div>} count={state.hot} id="hot" dispatch={dispatch}
+                                     background={colour.hotBackground} color={colour.hotColour}  colorBorder={"rgba(0, 0, 255, 0)"}/>
                 </Grid>
 
 
-                <Grid item xl={4}>
-                    <ResourceCounter text="ROŚLINNOŚĆ ILOŚĆ" count={state.bioNumber} id="bioNumber"
+                <Grid item xl={4} xs={4}>
+                    <ResourceCounter text={<EcoIcon/>} count={state.bioNumber} id="bioNumber"
                                      dispatch={dispatch} background={colour.bioBackground} color={colour.bioColour}
-                                     isBig={true}/>
+                                     isBig={true} colorBorder="#5C2A2D"/>
                 </Grid>
-                <Grid item xl={4}>
-                    <ResourceCounter text="ENERGIA ILOŚĆ" count={state.energyNumber} id="energyNumber"
+               <Grid item xl={4} xs={4}>
+                    <ResourceCounter text=<FlashOnIcon/> count={state.energyNumber} id="energyNumber"
                                      dispatch={dispatch}
-                                     background={colour.energyBackground} color={colour.energyColour}/>
+                                     background={colour.energyBackground} color={colour.energyColour} colorBorder="#5C2A2D"/>
                 </Grid>
-                <Grid item xl={4}>
-                    <ResourceCounter text="CIEPŁO ILOŚĆ" count={state.hotNumber} id="hotNumber" dispatch={dispatch}
-                                     background={colour.hotBackground} color={colour.hotColour} isBig={true}/>
+                <Grid item xl={4} xs={4}>
+                    <ResourceCounter  text={<div> <FlashOnIcon/> <FlashOnIcon/> <FlashOnIcon/> </div>} count={state.hotNumber} id="hotNumber" dispatch={dispatch}
+                                     background={colour.hotBackground} color={colour.hotColour} isBig={true} colorBorder="#5C2A2D"/>
                 </Grid>
                 <Grid item xl={12}>
                     <Button fullWidth variant="contained" onClick={() => dispatch({type: 'nextRound'})}
@@ -198,12 +207,11 @@ function App() {
                     <Button fullWidth variant="contained" onClick={() => dispatch({type: 'reset'})}
                             className={classes.button}>Zeruj</Button>
                 </Grid>
-                <Grid item xl={12}>
-                    <ModalRound text="Historia" dye={colour} stan={state.hist} dispatch={dispatch}/>
-                </Grid>
-                <Grid item xl={12}>
-                    <ModalKart text="karta" dye={colour} stan={state} dispatch={dispatch}/>
-                </Grid>
+   <ModalRound text="Historia" dye={colour} stan={state.hist} dispatch={dispatch}/>
+           <ModalKart text="karta" dye={colour} stan={state} dispatch={dispatch}/>
+
+
+
             </Grid>
 
         </div>

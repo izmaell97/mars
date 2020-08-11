@@ -33,9 +33,9 @@ const useStyles = makeStyles((theme) => ({
     button: {
         background: 'radial-gradient(circle, rgba(176,176,176,1) 45%, rgba(145,144,143,1) 78%)',
         color: 'black',
-        fontSize: 20,
-        marginRight: 10,
-        marginLeft: 10,
+       fontSize: 18,
+        marginRight: 5,
+        marginLeft: 5,
     },
 
 }));
